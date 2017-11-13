@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="vue.min.js"></script>
+</head>
+<body>
+	<div id="nakladnaya">
+		<form>
+			<legend>Добавление позиций</legend>
+			<input placeholder="Наименование" v-model="goods.name">
+			<input placeholder="Количество" v-model="goods.quantity">
+			<input placeholder="Цена" v-model="goods.price">
+			<button v-on:click.prevent="addGoods">&#43;</button>
+		</form>
+		<table>
+			<caption>Накладная</caption>
+			<tr>
+				<th>№</th>
+				<th>Наименование</th>
+				<th>Количество</th>
+				<th>Цена</th>
+			</tr>
+			<tr v-for="(good, index) in goods">
+				<td>{{index + 1}}</td>					
+				<template v-if="good.show">
+					<td>{{good.name}}</td>
+					<td>{{good.quantity}}</td>
+					<td>{{good.price}}</td>
+					<td class="button"><button v-on:click.prevent="editGoods(index)" >&#9998;</button></td>
+					<td class="button"><button v-on:click.prevent="deleteGoods(index)">&#10006;</button></td>
+				</template>	
+				<template v-else>
+					<td><input  type="text" v-model="good.name" ></td>
+					<td><input type="text" v-model="good.quantity"></td>
+					<td><input type="text" v-model="good.price"></td>			
+					<td class="button"><button v-on:click.prevent="saveGoods(index)">&#10004;</button></td>
+				</template>	
+			</tr>
+			<tr>
+				<th colspan="3">ИТОГО</th>
+				<td ><b>{{total()}}</b></td>
+			</tr>			
+		</table>	
+	</div>
+	<script src="main.js"></script>
+</body>
+</html>
